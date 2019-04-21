@@ -9,6 +9,7 @@ using Heavy.Web.Data;
 using Heavy.Web.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Heavy.Web.Models;
 
 namespace Heavy.Web
 {
@@ -31,24 +32,30 @@ namespace Heavy.Web
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 1;
+            }).AddDefaultUI(UIFramework.Bootstrap4)
+              .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //add-migration InitialData -Context HeavyContext
-            // update-database -Context HeavyContext
-            //add-migration InitialIdentity -Context ApplicationDbContext
-            // update-database -Context ApplicationDbContext
             services.AddDbContext<HeavyContext>(options =>
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 });
 
             services.AddScoped<IAlbumService, AlbumEfService>();
+
+            // add-migration InitialData -Context HeavyContext
+            // update-database -Context HeavyContext
+            // add-migration InitialIdentity -Context ApplicationDbContext
+            // update-database -Context ApplicationDbContext
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
