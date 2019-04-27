@@ -51,10 +51,15 @@ namespace Heavy.Web
                 });
 
             services.AddScoped<IAlbumService, AlbumEfService>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("仅限管理员", policy => policy.RequireRole("Administrators"));
+                options.AddPolicy("编辑专辑", policy => policy.RequireClaim("Edit Albums"));
+            });
 
             // add-migration InitialData -Context HeavyContext
             // update-database -Context HeavyContext
-            // add-migration InitialIdentity -Context ApplicationDbContext
+            // add-migration AddClaims -Context ApplicationDbContext
             // update-database -Context ApplicationDbContext
         }
 

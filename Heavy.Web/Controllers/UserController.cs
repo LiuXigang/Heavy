@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Heavy.Web.Data;
 using Heavy.Web.Models;
 using Heavy.Web.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -44,7 +45,7 @@ namespace Heavy.Web.Controllers
             var result = await _userManager.CreateAsync(user, model.Password.Trim());
             if (result.Succeeded)
                 return RedirectToAction(nameof(Index));
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
@@ -54,6 +55,9 @@ namespace Heavy.Web.Controllers
         public async Task<IActionResult> EditUser(string id)
         {
             var model = await _userManager.FindByIdAsync(id);
+            var claims = await _userManager.GetClaimsAsync(model);
+            var claimType = claims.Select(n => n.Type).ToList();
+            ViewBag.Claims = claimType;
             return View(model);
         }
         [HttpPost]
@@ -99,6 +103,76 @@ namespace Heavy.Web.Controllers
             }
             ModelState.AddModelError(string.Empty, "找不到该用户");
             return View(nameof(Index));
+        }
+
+        public async Task<IActionResult> ManageClaims(string id)
+        {
+            var user = await _userManager.Users.Include(n => n.Claims).Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (user == null)
+                return RedirectToAction(nameof(Index));
+            var userClaims = user.Claims.Select(x => x.ClaimType);
+            var leftClaims = ClaimTypes.AllClaimTypeList.Except(userClaims).ToList();
+            var vm = new ManageClaimsViewModel
+            {
+                UserId = id,
+                AvailableClaims = leftClaims
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageClaims(ManageClaimsViewModel vm)
+        {
+            var user = await _userManager.FindByIdAsync(vm.UserId);
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var claim = new IdentityUserClaim<string>
+            {
+                ClaimType = vm.ClaimId,
+                ClaimValue = vm.ClaimId
+            };
+
+            user.Claims.Add(claim);
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("EditUser", new { id = vm.UserId });
+            }
+
+            ModelState.AddModelError(string.Empty, "编辑用户Claims时发生错误");
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveClaim(string id, string claim)
+        {
+            var user = await _userManager.Users.Include(x => x.Claims)
+                .Where(x => x.Id == id).SingleOrDefaultAsync();
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var claims = user.Claims.Where(x => x.ClaimType == claim).ToList();
+
+            foreach (var c in claims)
+            {
+                user.Claims.Remove(c);
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("EditUser", new { id });
+            }
+
+            ModelState.AddModelError(string.Empty, "编辑用户Claims时发生错误");
+            return RedirectToAction("ManageClaims", new { id });
         }
     }
 }
