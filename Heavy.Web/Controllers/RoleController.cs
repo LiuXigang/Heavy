@@ -110,5 +110,110 @@ namespace Heavy.Web.Controllers
             ModelState.AddModelError(string.Empty, "没找到该角色");
             return View("Index", await _roleManager.Roles.ToListAsync());
         }
+
+        public async Task<IActionResult> AddUserToRole(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null)
+                return RedirectToAction(nameof(Index));
+            var vm = new UserRoleViewModel
+            {
+                RoleId = role.Id
+            };
+            var users = await _userManager.Users.ToListAsync();
+            foreach (var user in users)
+            {
+                if (!await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    vm.Users.Add(user);
+                }
+            }
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUserToRole(UserRoleViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            var role = await _roleManager.FindByIdAsync(model.RoleId);
+            if (user != null && role != null)
+            {
+                var result = await _userManager.AddToRoleAsync(user, role.Name);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("EditRole", new { id = role.Id });
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(model);
+            }
+
+            ModelState.AddModelError(string.Empty, "用户或角色未找到");
+            return View(model);
+        }
+
+        public async Task<IActionResult> DeleteUserFromRole(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var vm = new UserRoleViewModel
+            {
+                RoleId = role.Id
+            };
+
+            var users = await _userManager.Users.ToListAsync();
+
+            foreach (var user in users)
+            {
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    vm.Users.Add(user);
+                }
+            }
+
+            return View(vm);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUserFromRole(UserRoleViewModel userRoleViewModel)
+        {
+            var user = await _userManager.FindByIdAsync(userRoleViewModel.UserId);
+            var role = await _roleManager.FindByIdAsync(userRoleViewModel.RoleId);
+
+            if (user != null && role != null)
+            {
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("EditRole", new { id = role.Id });
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(userRoleViewModel);
+                }
+
+                ModelState.AddModelError(string.Empty, "用户不在角色里");
+                return View(userRoleViewModel);
+            }
+
+            ModelState.AddModelError(string.Empty, "用户或角色未找到");
+            return View(userRoleViewModel);
+        }
     }
 }
