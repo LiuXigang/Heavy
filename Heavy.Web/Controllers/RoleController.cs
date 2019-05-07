@@ -216,5 +216,14 @@ namespace Heavy.Web.Controllers
             ModelState.AddModelError(string.Empty, "用户或角色未找到");
             return View(userRoleViewModel);
         }
+
+        [AcceptVerbs("Get", "Post")]
+        public async Task<IActionResult> CheckRoleExist([Bind("RoleName")] string roleName)
+        {
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role != null)
+                return Json("角色已经存在了");
+            return Json(true);
+        }
     }
 }
