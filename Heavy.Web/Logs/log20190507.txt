@@ -1,0 +1,89 @@
+2019-05-07 17:18:36.993 +08:00 [INF] Entity Framework Core 2.2.2-servicing-10034 initialized 'HeavyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-05-07 17:18:37.852 +08:00 [INF] Executed DbCommand (102ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Albums] AS [a])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+2019-05-07 17:18:38.115 +08:00 [INF] User profile is available. Using 'C:\Users\Liu\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2019-05-07 17:18:41.506 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/  
+2019-05-07 17:18:41.693 +08:00 [INF] Executing endpoint 'Heavy.Web.Controllers.HomeController.Index (Heavy.Web)'
+2019-05-07 17:18:41.737 +08:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing action Heavy.Web.Controllers.HomeController.Index (Heavy.Web)
+2019-05-07 17:18:41.938 +08:00 [INF] Executing action method Heavy.Web.Controllers.HomeController.Index (Heavy.Web) - Validation state: "Valid"
+2019-05-07 17:18:41.947 +08:00 [INF] Executed action method Heavy.Web.Controllers.HomeController.Index (Heavy.Web), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.92170000000000007ms.
+2019-05-07 17:18:41.986 +08:00 [INF] Executing ViewResult, running view Index.
+2019-05-07 17:18:42.275 +08:00 [INF] Executed ViewResult - view Index executed in 306.2568ms.
+2019-05-07 17:18:42.291 +08:00 [INF] Executed action Heavy.Web.Controllers.HomeController.Index (Heavy.Web) in 552.16370000000006ms
+2019-05-07 17:18:42.346 +08:00 [INF] Executed endpoint 'Heavy.Web.Controllers.HomeController.Index (Heavy.Web)'
+2019-05-07 17:18:42.406 +08:00 [INF] Request finished in 901.4171ms 200 text/html; charset=utf-8
+2019-05-07 17:18:45.655 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/User  
+2019-05-07 17:18:45.662 +08:00 [INF] Executing endpoint 'Heavy.Web.Controllers.UserController.Index (Heavy.Web)'
+2019-05-07 17:18:45.680 +08:00 [INF] Route matched with {action = "Index", controller = "User", page = "", area = ""}. Executing action Heavy.Web.Controllers.UserController.Index (Heavy.Web)
+2019-05-07 17:18:45.742 +08:00 [INF] Executing action method Heavy.Web.Controllers.UserController.Index (Heavy.Web) - Validation state: "Valid"
+2019-05-07 17:18:45.865 +08:00 [INF] Entity Framework Core 2.2.2-servicing-10034 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-05-07 17:18:46.137 +08:00 [INF] Executed DbCommand (175ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[AccessFailedCount], [a].[BirthDate], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[IdCardNo], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+2019-05-07 17:18:46.257 +08:00 [INF] Executed action method Heavy.Web.Controllers.UserController.Index (Heavy.Web), returned result Microsoft.AspNetCore.Mvc.ViewResult in 513.2776ms.
+2019-05-07 17:18:46.281 +08:00 [INF] Executing ViewResult, running view Index.
+2019-05-07 17:18:46.471 +08:00 [INF] Executed ViewResult - view Index executed in 196.7133ms.
+2019-05-07 17:18:46.481 +08:00 [INF] Executed action Heavy.Web.Controllers.UserController.Index (Heavy.Web) in 797.9217ms
+2019-05-07 17:18:46.509 +08:00 [INF] Executed endpoint 'Heavy.Web.Controllers.UserController.Index (Heavy.Web)'
+2019-05-07 17:18:46.539 +08:00 [INF] Request finished in 883.2812ms 200 text/html; charset=utf-8
+2019-05-07 17:18:51.325 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/User/EditUser/b692e62e-db11-4be9-be2f-cb457bf126ad  
+2019-05-07 17:18:51.330 +08:00 [INF] Executing endpoint 'Heavy.Web.Controllers.UserController.EditUser (Heavy.Web)'
+2019-05-07 17:18:51.356 +08:00 [INF] Route matched with {action = "EditUser", controller = "User", page = "", area = ""}. Executing action Heavy.Web.Controllers.UserController.EditUser (Heavy.Web)
+2019-05-07 17:18:51.423 +08:00 [INF] Executing action method Heavy.Web.Controllers.UserController.EditUser (Heavy.Web) with arguments (["b692e62e-db11-4be9-be2f-cb457bf126ad"]) - Validation state: "Valid"
+2019-05-07 17:18:51.441 +08:00 [INF] Entity Framework Core 2.2.2-servicing-10034 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-05-07 17:18:51.627 +08:00 [INF] Executed DbCommand (102ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[BirthDate], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[IdCardNo], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+2019-05-07 17:18:51.822 +08:00 [INF] Executed DbCommand (104ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [uc].[Id], [uc].[ClaimType], [uc].[ClaimValue], [uc].[UserId]
+FROM [AspNetUserClaims] AS [uc]
+WHERE [uc].[UserId] = @__user_Id_0
+2019-05-07 17:18:51.866 +08:00 [INF] Executed action method Heavy.Web.Controllers.UserController.EditUser (Heavy.Web), returned result Microsoft.AspNetCore.Mvc.ViewResult in 430.7728ms.
+2019-05-07 17:18:51.878 +08:00 [INF] Executing ViewResult, running view EditUser.
+2019-05-07 17:18:52.061 +08:00 [INF] Executed ViewResult - view EditUser executed in 192.0076ms.
+2019-05-07 17:18:52.062 +08:00 [INF] Executed action Heavy.Web.Controllers.UserController.EditUser (Heavy.Web) in 704.39550000000008ms
+2019-05-07 17:18:52.066 +08:00 [INF] Executed endpoint 'Heavy.Web.Controllers.UserController.EditUser (Heavy.Web)'
+2019-05-07 17:18:52.069 +08:00 [INF] Request finished in 744.4852ms 200 text/html; charset=utf-8
+2019-05-07 17:18:56.663 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/User/EditUser/b692e62e-db11-4be9-be2f-cb457bf126adgff  
+2019-05-07 17:18:56.683 +08:00 [INF] Executing endpoint 'Heavy.Web.Controllers.UserController.EditUser (Heavy.Web)'
+2019-05-07 17:18:56.686 +08:00 [INF] Route matched with {action = "EditUser", controller = "User", page = "", area = ""}. Executing action Heavy.Web.Controllers.UserController.EditUser (Heavy.Web)
+2019-05-07 17:18:56.728 +08:00 [INF] Executing action method Heavy.Web.Controllers.UserController.EditUser (Heavy.Web) with arguments (["b692e62e-db11-4be9-be2f-cb457bf126adgff"]) - Validation state: "Valid"
+2019-05-07 17:18:56.730 +08:00 [INF] Entity Framework Core 2.2.2-servicing-10034 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2019-05-07 17:18:56.791 +08:00 [INF] Executed DbCommand (56ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[BirthDate], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[IdCardNo], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+2019-05-07 17:18:57.181 +08:00 [INF] Executed action Heavy.Web.Controllers.UserController.EditUser (Heavy.Web) in 489.18670000000003ms
+2019-05-07 17:18:57.183 +08:00 [INF] Executed endpoint 'Heavy.Web.Controllers.UserController.EditUser (Heavy.Web)'
+2019-05-07 17:18:57.201 +08:00 [ERR] An unhandled exception has occurred while executing the request.
+System.ArgumentNullException: Value cannot be null.
+Parameter name: user
+   at Microsoft.AspNetCore.Identity.UserManager`1.GetClaimsAsync(TUser user)
+   at Heavy.Web.Controllers.UserController.EditUser(String id) in G:\StudyDemo\ASP.NET Core MVC Tutorial Code\ASP.NET-Core-MVC-Tutorial-Code\15 start\Heavy.Web\Controllers\UserController.cs:line 58
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.MigrationsEndPointMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2019-05-07 17:18:57.850 +08:00 [INF] Request finished in 1187.2652ms 500 text/html; charset=utf-8
