@@ -84,6 +84,12 @@ namespace Heavy.Web
                 options.Filters.Add<LogResourceFilter>();
             });
 
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+                options.InstanceName = "redis-for-albums";
+            });
+
             // add-migration InitialData -Context HeavyContext
             // update-database -Context HeavyContext
             // add-migration AddClaims -Context ApplicationDbContext

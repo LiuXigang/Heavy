@@ -1,11 +1,18 @@
-﻿using System.Text.Encodings.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Heavy.Web.Data;
 using Heavy.Web.Models;
 using Heavy.Web.Services;
 using Heavy.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 
 namespace Heavy.Web.Controllers
 {
@@ -15,18 +22,36 @@ namespace Heavy.Web.Controllers
     {
         private readonly IAlbumService _albumService;
         private readonly HtmlEncoder _htmlEncoder;
+        private readonly IDistributedCache _distributedCache;
 
-        public AlbumController(IAlbumService albumService, HtmlEncoder htmlEncoder)
+        public AlbumController(IAlbumService albumService, HtmlEncoder htmlEncoder, IDistributedCache distributedCache)
         {
             _albumService = albumService;
             _htmlEncoder = htmlEncoder;
+            _distributedCache = distributedCache;
         }
 
         // GET: Album
         public async Task<ActionResult> Index()
         {
-            var albums = await _albumService.GetAllAsync();
-            return View(albums);
+            List<Album> cachedAlbums = null;
+
+            var cachedAlbumsString = _distributedCache.Get(CacheEntryConstants.AlbumsOfToday);
+            if (cachedAlbumsString == null)
+            {
+                cachedAlbums = await _albumService.GetAllAsync();
+                var serializedString = JsonConvert.SerializeObject(cachedAlbums);
+                byte[] encodedAlbums = Encoding.UTF8.GetBytes(serializedString);
+
+                _distributedCache.Set(CacheEntryConstants.AlbumsOfToday, encodedAlbums);
+            }
+            else
+            {
+                byte[] encodedAlbums = _distributedCache.Get(CacheEntryConstants.AlbumsOfToday);
+                string serializedString = Encoding.UTF8.GetString(encodedAlbums);
+                cachedAlbums = JsonConvert.DeserializeObject<List<Album>>(serializedString);
+            }
+            return View(cachedAlbums);
         }
 
         // GET: Album/Details/5
