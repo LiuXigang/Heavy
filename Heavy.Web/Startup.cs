@@ -95,6 +95,8 @@ namespace Heavy.Web
                 options.InstanceName = "redis-for-albums";
             });
 
+            services.AddResponseCompression();
+
             // add-migration InitialData -Context HeavyContext
             // update-database -Context HeavyContext
             // add-migration AddClaims -Context ApplicationDbContext
@@ -114,6 +116,8 @@ namespace Heavy.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseResponseCompression();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
