@@ -10,6 +10,8 @@ namespace Heavy.Web.Controllers
 {
     public class HomeController : Controller
     {
+        // [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
+        [ResponseCache(CacheProfileName = "Default")]
         public IActionResult Index()
         {
             return View();

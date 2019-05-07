@@ -82,6 +82,11 @@ namespace Heavy.Web
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 //options.Filters.Add(typeof(LogAsyncResourceFilter));
                 options.Filters.Add<LogResourceFilter>();
+
+                options.CacheProfiles.Add("Default", new CacheProfile
+                {
+                    Duration = 60
+                });
             });
 
             services.AddDistributedRedisCache(options =>
