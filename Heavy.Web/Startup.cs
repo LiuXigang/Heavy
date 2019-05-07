@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Heavy.Web.Models;
 using Heavy.Web.Auth;
 using Microsoft.AspNetCore.Authorization;
+using Heavy.Web.Filters;
 
 namespace Heavy.Web
 {
@@ -79,6 +80,8 @@ namespace Heavy.Web
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                //options.Filters.Add(typeof(LogAsyncResourceFilter));
+                options.Filters.Add<LogResourceFilter>();
             });
 
             // add-migration InitialData -Context HeavyContext
